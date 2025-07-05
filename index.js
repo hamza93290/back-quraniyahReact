@@ -1,11 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import admin from 'firebase-admin';
-import { readFileSync } from 'fs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-
+import { config } from 'dotenv';
 
 
 // Initialiser Firebase Admin avec la clé de service
@@ -188,5 +187,6 @@ app.post('/login', async (req, res) => {
   res.send({ token });
 });
 
-import * as functions from 'firebase-functions';
-export const api = functions.https.onRequest(app);
+app.listen(port, () => {
+  console.log(`🚀 Server running at http://localhost:${port}`);
+});
