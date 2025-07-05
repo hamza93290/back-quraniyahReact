@@ -5,7 +5,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import { config } from 'dotenv';
-
+import https from 'https';
+import fs from 'fs';
 
 // Initialiser Firebase Admin avec la clé de service
 config(); // Charge les variables d’environnement
@@ -15,6 +16,11 @@ const serviceAccount = {
   project_id: process.env.FIREBASE_PROJECT_ID,
   private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
   client_email: process.env.FIREBASE_CLIENT_EMAIL,
+};
+
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/api.institutquraniyah.fr/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/api.institutquraniyah.fr/fullchain.pem')
 };
 
 admin.initializeApp({
@@ -187,6 +193,7 @@ app.post('/login', async (req, res) => {
   res.send({ token });
 });
 
-app.listen(port, () => {
-  console.log(`🚀 Server running at http://localhost:${port}`);
+
+https.createServer(options, app).listen(3000, () => {
+  console.log('HTTPS Server running on port 3000');
 });
