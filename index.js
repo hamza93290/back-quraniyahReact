@@ -129,7 +129,7 @@ app.post('/eleves/save', async (req, res) => {
       secure: false, // STARTTLS
     auth: {
       user: 'admin@institutquraniyah.fr',
-      pass: 'bSqYKbLYhpbPW5umih4F' // ou mot de passe d'application si nécessaire
+      pass: process.env.MAIL_PASS 
     }
   });
 
@@ -167,7 +167,6 @@ app.post('/register', async (req, res) => {
 });
 
 
-const JWT_SECRET = '6d14845ef59dac1ec742ed2c17c64a691f1e2877cd5ff72bf9cf8a085501880ff0240c82e5759fd49246d3f54d95b186fcbe781de4e8c3760c63a5018ca03f59'; // stocke-la dans une variable d’environnement en prod
 
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -191,7 +190,7 @@ app.post('/login', async (req, res) => {
 
   const token = jwt.sign(
     { id: adminDoc.id, username: adminData.username },
-    JWT_SECRET,
+    process.env.JWT_SECRET,
     { expiresIn: '2h' }
   );
 
