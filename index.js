@@ -119,7 +119,7 @@ app.post('/eleves/save', async (req, res) => {
   try {
     // Enregistrer dans Firestore
     const docRef = await db.collection('eleves').add({
-      age, cursus, email, lastname, name, telephone, createdAt: FieldValue.serverTimestamp() 
+      age, cursus, email, lastname, name, telephone
     });
 
     // Configurer nodemailer
