@@ -7,6 +7,7 @@ import nodemailer from 'nodemailer';
 import { config } from 'dotenv';
 import https from 'https';
 import fs from 'fs';
+import FieldValue from 'firebase-admin/firestore'
 
 // Initialiser Firebase Admin avec la clé de service
 config(); // Charge les variables d’environnement
@@ -57,9 +58,13 @@ app.get('/admin', async (req, res) => {
 });
 
 // 📄 Récupérer tous les documents
-app.get('/eleves/get', async (req, res) => {
+app.get('/eleves/get', async (req, res) => { 
   try {
-    const snapshot = await db.collection('eleves').get();
+    const snapshot = await db
+      .collection('eleves')
+      .orderBy('createdAt', 'desc')
+      .get();
+
     const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     res.send(users);
   } catch (error) {
@@ -114,7 +119,7 @@ app.post('/eleves/save', async (req, res) => {
   try {
     // Enregistrer dans Firestore
     const docRef = await db.collection('eleves').add({
-      age, cursus, email, lastname, name, telephone
+      age, cursus, email, lastname, name, telephone, createdAt: FieldValue.serverTimestamp() 
     });
 
     // Configurer nodemailer
