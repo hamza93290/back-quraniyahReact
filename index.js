@@ -8,6 +8,7 @@ import { config } from 'dotenv';
 import https from 'https';
 import fs from 'fs';
 import { FieldValue } from 'firebase-admin/firestore';
+import generateWelcomeEmail from './mail';
 
 // Initialiser Firebase Admin avec la clé de service
 config(); // Charge les variables d’environnement
@@ -137,10 +138,7 @@ app.post('/eleves/save', async (req, res) => {
       from: 'admin@institutquraniyah.fr',
       to: email,
       subject: 'Bienvenue sur notre plateforme',
-      html: `
-        <h3>Bonjour ${name} ${lastname},</h3>
-        <p>Votre inscription a bien été prise en compte !</p>
-      `
+      html:  generateWelcomeEmail(name, lastname)
     };
 
     await transporter.sendMail(mailOptions);
