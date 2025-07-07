@@ -8,7 +8,7 @@ import { config } from 'dotenv';
 import https from 'https';
 import fs from 'fs';
 import { FieldValue } from 'firebase-admin/firestore';
-import generateWelcomeEmail from './mail';
+import generateWelcomeEmail from './mail.js';
 
 // Initialiser Firebase Admin avec la clé de service
 config(); // Charge les variables d’environnement

@@ -1,12 +1,5 @@
-function generateWelcomeEmail(name, lastname) {
+export default function generateWelcomeEmail(name, lastname) {
   return `
-    <!DOCTYPE html>
-    <html lang="fr">
-      <head>
-        <meta charset="UTF-8" />
-        <title>Bienvenue sur notre plateforme</title>
-      </head>
-      <body>
         <h3>Bonjour ${name} ${lastname},</h3>
         <p>Votre inscription a bien été prise en compte !</p>
         <p><strong>FÉLICITATIONS pour ton inscription 🎉.</strong></p>
@@ -41,9 +34,5 @@ function generateWelcomeEmail(name, lastname) {
           Vous trouverez tous nos réseaux sociaux ici ⬇️ <br />
           <a href="https://linktr.ee/quraniyah.fr" target="_blank">https://linktr.ee/quraniyah.fr</a>
         </p>
-      </body>
-    </html>
   `;
 }
-
-module.exports = generateWelcomeEmail;
